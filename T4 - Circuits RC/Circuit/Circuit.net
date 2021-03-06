@@ -1,0 +1,14 @@
+* D:\Clones\LINFO1140\T4 - Circuits RC\Circuit.asc
+S1 N004 N003 N001 0 Interupt
+V1 N001 0 PULSE(0 1 2n 1p 1p 4n)
+R1 N003 N002 2k
+V2 N002 0 12
+R2 N004 0 2k
+I1 0 N004 2m
+R3 C N004 4k
+R4 C 0 12k
+C1 C 0 20f
+.model Interupt sw ron=0.01
+.tran 4n
+.backanno
+.end
