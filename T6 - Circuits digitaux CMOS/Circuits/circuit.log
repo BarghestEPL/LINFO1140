@@ -1,0 +1,27 @@
+Circuit: * C:\users\barghest\Desktop\LINFO1140\T6 - Circuits digitaux CMOS\Circuits\circuit.asc
+
+Warning: Multiple definitions of model "aons66402" Type: Vdmos1
+Direct Newton iteration for .op point succeeded.
+.step var=5e-015
+.step var=1.5e-014
+.step var=2.5e-014
+.step var=5e-014
+.step var=1e-013
+
+Date: Sat Mar 20 12:54:03 2021
+Total elapsed time: 0.502 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 3194
+traniter = 3168
+tranpoints = 1331
+accept = 1260
+rejected = 71
+matrix size = 71
+fillins = 2
+solver = Normal
+Matrix Compiler1: 9.41 KB object code size  1.5/0.7/[0.5]
+Matrix Compiler2: 8.66 KB object code size  0.6/0.7/[0.5]
+
