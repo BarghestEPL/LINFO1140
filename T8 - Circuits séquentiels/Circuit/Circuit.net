@@ -1,0 +1,115 @@
+* C:\Users\floew\OneDrive\Documents\Github\LINFO1140\T8 - Circuits séquentiels\Circuit\Circuit.asc
+XX1 A B C D P001 P002 P003 P004 CLK d_ff4
+V1 A 0 PULSE(0 1 16n 1p 1p 16n 32n)
+V2 B 0 PULSE(0 1 8n 1p 1p 8n 16n)
+V3 C 0 PULSE(0 1 4n 1p 1p 4n 8n)
+V4 D 0 PULSE(0 1 2n 1p 1p 2n 4n)
+XX2 P004 P003 P002 P001 P005 fonction
+XX3 P005 OUT CLK d_ff
+V5 CLK 0 PULSE(0 1 1n 1p 1p 1n 2n)
+C1 OUT 0 50f
+
+* block symbol definitions
+.subckt d_ff4 A B C D DCLK CCLK BCLK ACLK CLK
+XX1 A ACLK CLK d_ff
+XX2 B BCLK CLK d_ff
+XX3 C CCLK CLK d_ff
+XX4 D DCLK CLK d_ff
+.ends d_ff4
+
+.subckt fonction A B C D OUT
+XX1 A D N005 N001 and3
+XX2 N002 N004 N005 OUT or3
+XX3 A N006 not
+XX4 B N001 not
+XX5 C N003 not
+XX6 D N007 not
+XX7 N001 N003 N002 and2
+XX8 B C N004 and2
+.ends fonction
+
+.subckt d_ff D Q clock
+M1 N004 N002 0 0 N_50n l=50n w=500n
+VDD VDD 0 1
+M2 VDD N002 N004 VDD P_50n l=50n w=1u
+M5 N003 N004 0 0 N_50n l=50n w=500n
+M6 VDD N004 N003 VDD P_50n l=50n w=1u
+M7 D clock_b N002 0 N_50n l=50n w=500n
+M3 N002 clock D VDD P_50n l=50n w=1u
+M4 N002 clock N003 0 N_50n l=50n w=500n
+M8 N003 clock_b N002 VDD P_50n l=50n w=1u
+M9 Q N001 0 0 N_50n l=50n w=500n
+M10 VDD N001 Q VDD P_50n l=50n w=1u
+M11 Q_bar Q 0 0 N_50n l=50n w=500n
+M12 VDD Q Q_bar VDD P_50n l=50n w=1u
+M13 N004 clock N001 0 N_50n l=50n w=500n
+M14 N001 clock_b N004 VDD P_50n l=50n w=1u
+M15 N001 clock_b Q_bar 0 N_50n l=50n w=500n
+M16 Q_bar clock N001 VDD P_50n l=50n w=1u
+XX2 clock clock_b not
+.include cmosedu_models.txt
+.ends d_ff
+
+.subckt and3 In1 In3 Out In2
+XX2 P001 Out not
+XX1 In1 In3 P001 In2 nand3
+.ends and3
+
+.subckt or3 In1 In2 In3 Out
+XX2 N001 Out not
+XX1 In1 In2 In3 N001 nor3
+.ends or3
+
+.subckt not In Out
+M1 Out In 0 0 N_50n l=50n w=500n
+M2 VDD In Out VDD P_50n l=50n w=1u
+VDD VDD 0 1
+.include cmosedu_models.txt
+.ends not
+
+.subckt and2 In1 In2 Out
+XX1 In1 In2 P001 nand2
+XX2 P001 Out not
+.ends and2
+
+.subckt nand3 In1 In3 Out In2
+VDD VDD 0 1
+M3 VDD In2 Out VDD P_50n l=50n w=1u
+M1 P001 In2 0 0 N_50n l=50n w=1.5u
+M2 P002 In1 P001 0 N_50n l=50n w=1.5u
+M4 VDD In1 Out VDD P_50n l=50n w=1u
+C1 Out 0 50f
+M5 VDD In3 Out VDD P_50n l=50n w=1u
+M6 Out In3 P002 0 N_50n l=50n w=1.5u
+.include cmosedu_models.txt
+.ends nand3
+
+.subckt nor3 In1 In2 In3 Out
+VDD VDD 0 1
+M3 VDD In3 N001 VDD P_50n l=50n w=3u
+M1 Out In3 0 0 N_50n l=50n w=500n
+M2 Out In2 0 0 N_50n l=50n w=500n
+M4 N001 In2 N002 VDD P_50n l=50n w=3u
+C1 Out 0 50f
+M5 N002 In1 Out VDD P_50n l=50n w=3u
+M6 Out In1 0 0 N_50n l=50n w=500n
+.include cmosedu_models.txt
+.ends nor3
+
+.subckt nand2 In1 In2 Out
+VDD VDD 0 1
+M3 VDD In2 Out VDD P_50n l=50n w=1u
+M1 P001 In2 0 0 N_50n l=50n w=1u
+M2 Out In1 P001 0 N_50n l=50n w=1u
+M4 VDD In1 Out VDD P_50n l=50n w=1u
+C1 Out 0 50f
+.include cmosedu_models.txt
+.ends nand2
+
+.model NMOS NMOS
+.model PMOS PMOS
+.lib C:\Users\floew\OneDrive\Documents\LTspiceXVII\lib\cmp\standard.mos
+.include cmosedu_models.txt
+.tran 34n
+.backanno
+.end
